@@ -1,0 +1,42 @@
+05-4-2026 05:36:21 PM error: Username or email already exists
+Error: Username or email already exists
+    at AuthService.register (file:///C:/code/Backend/Authentication%20modern/src/app/services/auth.services.js:9:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async register (file:///C:/code/Backend/Authentication%20modern/src/controllers/auth.controller.js:9:37)
+05-4-2026 05:36:41 PM error: Username or email already exists
+Error: Username or email already exists
+    at AuthService.register (file:///C:/code/Backend/Authentication%20modern/src/app/services/auth.services.js:9:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async register (file:///C:/code/Backend/Authentication%20modern/src/controllers/auth.controller.js:9:37)
+05-4-2026 05:36:44 PM error: Username or email already exists
+Error: Username or email already exists
+    at AuthService.register (file:///C:/code/Backend/Authentication%20modern/src/app/services/auth.services.js:9:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async register (file:///C:/code/Backend/Authentication%20modern/src/controllers/auth.controller.js:9:37)
+05-4-2026 05:37:48 PM error: Username or email already exists
+Error: Username or email already exists
+    at AuthService.register (file:///C:/code/Backend/Authentication%20modern/src/app/services/auth.services.js:9:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async register (file:///C:/code/Backend/Authentication%20modern/src/controllers/auth.controller.js:9:37)
+05-4-2026 05:39:01 PM error: Username or email already exists
+Error: Username or email already exists
+    at AuthService.register (file:///C:/code/Backend/Authentication%20modern/src/app/services/auth.services.js:9:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async register (file:///C:/code/Backend/Authentication%20modern/src/controllers/auth.controller.js:9:37)
+05-4-2026 05:39:43 PM error: Username or email already exists
+Error: Username or email already exists
+    at AuthService.register (file:///C:/code/Backend/Authentication%20modern/src/app/services/auth.services.js:11:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async register (file:///C:/code/Backend/Authentication%20modern/src/controllers/auth.controller.js:9:37)
+05-4-2026 05:41:58 PM error: password is not defined
+ReferenceError: password is not defined
+    at model.<anonymous> (file:///C:/code/Backend/Authentication%20modern/src/models/user.model.js:27:17)
+    at Kareem.execPre (C:\code\Backend\Authentication modern\node_modules\kareem\index.js:68:39)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async model.$__save (C:\code\Backend\Authentication modern\node_modules\mongoose\lib\model.js:376:5)
+    at async model.save (C:\code\Backend\Authentication modern\node_modules\mongoose\lib\model.js:642:5)
+    at async C:\code\Backend\Authentication modern\node_modules\mongoose\lib\model.js:2778:9
+    at async Promise.all (index 0)
+    at async Function.create (C:\code\Backend\Authentication modern\node_modules\mongoose\lib\model.js:2763:11)
+    at async AuthRepository.createUser (file:///C:/code/Backend/Authentication%20modern/src/app/repository/auth.repository.js:9:16)
+    at async AuthService.register (file:///C:/code/Backend/Authentication%20modern/src/app/services/auth.services.js:16:22)

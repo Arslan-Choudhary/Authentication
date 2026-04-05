@@ -1,0 +1,44 @@
+{
+  "name": "authentication",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/app.js",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon main",
+    "start": "pm2 start src/app.js --name authentication-8000 --max-memory-restart=3G"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.6",
+    "dotenv": "^17.3.1",
+    "express": "^5.2.1",
+    "express-rate-limit": "^8.3.0",
+    "jsonwebtoken": "^9.0.3",
+    "moment": "^2.30.1",
+    "mongoose": "^9.2.4",
+    "morgan": "^1.10.1",
+    "pm2": "^6.0.14",
+    "winston": "^3.19.0"
+  },
+  "imports": {
+    "#env": "./env.js",
+    "#server": "./src/server/server.js",
+    "#connections": "./src/exports/connections.js",
+    "#middlewares": "./src/exports/middlewares.js",
+    "#utils": "./src/exports/utils.js",
+    "#constants": "./src/exports/constants.js",
+    "#helpers": "./src/exports/helpers.js",
+    "#models": "./src/exports/models.js",
+    "#syncRoutes": "./src/server/routes.js",
+    "#routes": "./src/exports/routes.js",
+    "#controllers": "./src/exports/controllers.js",
+    "#service": "./src/exports/service.js",
+    "#repository": "./src/exports/repository.js"
+  },
+  "devDependencies": {
+    "prettier": "^3.8.1"
+  }
+}
