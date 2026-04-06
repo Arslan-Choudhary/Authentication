@@ -8,6 +8,10 @@ class AuthRepository {
     static async createUser(data) {
         return await userModel.create(data);
     }
+
+    static async findUserById(id) {
+        return await userModel.findById(id);
+    }
 }
 
 export default AuthRepository;

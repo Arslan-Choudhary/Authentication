@@ -28,7 +28,27 @@ class AuthController {
                 token: token,
             };
 
-            ResponseHandler.createHandler(res, responseData, "User registered successfully");
+            ResponseHandler.createHandler(
+                res,
+                responseData,
+                "User registered successfully"
+            );
+        } catch (error) {
+            ResponseHandler.errorHandler(res, error);
+        }
+    }
+
+    static async getMe(req, res) {
+        try {
+            const token = req.headers.authorization?.split(" ")[1];
+
+            const user = await AuthService.getMe(token);
+
+            ResponseHandler.successHandler(
+                res,
+                { user: {username: user.username, email: user.email }},
+                "user fetched successfully"
+            );
         } catch (error) {
             ResponseHandler.errorHandler(res, error);
         }

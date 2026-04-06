@@ -40,3 +40,8 @@ ReferenceError: password is not defined
     at async Function.create (C:\code\Backend\Authentication modern\node_modules\mongoose\lib\model.js:2763:11)
     at async AuthRepository.createUser (file:///C:/code/Backend/Authentication%20modern/src/app/repository/auth.repository.js:9:16)
     at async AuthService.register (file:///C:/code/Backend/Authentication%20modern/src/app/services/auth.services.js:16:22)
+06-4-2026 07:36:51 PM error: user not found
+Error: user not found
+    at AuthService.getMe (file:///C:/code/Backend/Authentication%20modern/src/app/services/auth.services.js:41:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async getMe (file:///C:/code/Backend/Authentication%20modern/src/controllers/auth.controller.js:45:26)
