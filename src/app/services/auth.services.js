@@ -21,9 +21,11 @@ class AuthService {
             password,
         });
 
-        const token = user.generateToken();
+        const accessToken = user.generateAccessToken();
 
-        return { user, token };
+        const refreshToken = user.generateRefreshToken();
+
+        return { user, accessToken, refreshToken };
     }
 
     static async getMe(token) {
@@ -44,6 +46,30 @@ class AuthService {
         }
 
         return user;
+    }
+
+    static async refreshToken(refreshToken) {
+        if (!refreshToken) {
+            const error = new Error("Refresh token not found");
+            error.status = 401;
+            throw error;
+        }
+
+        const decoded = jwt.verify(refreshToken, ENV.JWT_SECRET);
+
+        const user = await AuthRepository.findUserById(decoded._id);
+
+        if (!user) {
+            const error = new Error("user not found");
+            error.status = 404;
+            throw error;
+        }
+
+        const accessToken = user.generateAccessToken();
+
+        const newRefreshToken = user.generateRefreshToken();
+
+        return { accessToken, newRefreshToken };
     }
 }
 

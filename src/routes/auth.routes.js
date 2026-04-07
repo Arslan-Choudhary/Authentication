@@ -9,8 +9,13 @@ const authRouter = Router();
 authRouter.route("/register").post(AuthController.register);
 
 /**
- * GET /api/auth/get-me
+ * - GET /api/auth/get-me
  */
 authRouter.route("/get-me").get(AuthController.getMe);
+
+/**
+ * - GET /api/auth/refresh-token
+ */
+authRouter.route("/refresh-token").get(AuthController.refreshToken);
 
 export default authRouter;

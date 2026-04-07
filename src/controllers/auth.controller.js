@@ -6,13 +6,10 @@ class AuthController {
         try {
             const { username, email, password } = req.body;
 
-            const { user, token } = await AuthService.register(
-                username,
-                email,
-                password
-            );
+            const { user, accessToken, refreshToken } =
+                await AuthService.register(username, email, password);
 
-            res.cookie("token", token, {
+            res.cookie("refreshToken", refreshToken, {
                 httpOnly: true,
                 secure: true,
                 sameSite: "strict",
@@ -25,7 +22,7 @@ class AuthController {
                     email: user.email,
                     username: user.username,
                 },
-                token: token,
+                accessToken: accessToken,
             };
 
             ResponseHandler.createHandler(
@@ -46,8 +43,31 @@ class AuthController {
 
             ResponseHandler.successHandler(
                 res,
-                { user: {username: user.username, email: user.email }},
+                { user: { username: user.username, email: user.email } },
                 "user fetched successfully"
+            );
+        } catch (error) {
+            ResponseHandler.errorHandler(res, error);
+        }
+    }
+
+    static async refreshToken(req, res) {
+        try {
+            const refreshToken = req.cookies.refreshToken;
+
+            const {accessToken, newRefreshToken} = await AuthService.refreshToken(refreshToken);
+
+             res.cookie("refreshToken", newRefreshToken, {
+                httpOnly: true,
+                secure: true,
+                sameSite: "strict",
+                maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+            });
+
+            ResponseHandler.successHandler(
+                res,
+                { accessToken: accessToken },
+                "Access Token refreshed successfully"
             );
         } catch (error) {
             ResponseHandler.errorHandler(res, error);

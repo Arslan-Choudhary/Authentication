@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import crypto from "crypto";
-import jwt from "jsonwebtoken"
+import jwt from "jsonwebtoken";
 import ENV from "#env";
 
 const userSchema = new mongoose.Schema({
@@ -28,10 +28,16 @@ userSchema.pre("save", async function () {
         .digest("hex");
 });
 
-userSchema.methods.generateToken = function () {
-  return jwt.sign({ _id: this._id }, ENV.JWT_SECRET, {
-    expiresIn: ENV.expiresIn,
-  });
+userSchema.methods.generateAccessToken = function () {
+    return jwt.sign({ _id: this._id }, ENV.JWT_SECRET, {
+        expiresIn: ENV.acccessTokenExpiresIn,
+    });
+};
+
+userSchema.methods.generateRefreshToken = function () {
+    return jwt.sign({ _id: this._id }, ENV.JWT_SECRET, {
+        expiresIn: ENV.refreshTokenExpiresIn,
+    });
 };
 
 const userModel = mongoose.model("User", userSchema);
