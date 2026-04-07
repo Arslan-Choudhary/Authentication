@@ -57,3 +57,77 @@ Error: Refresh token not found
     at C:\code\Backend\Authentication modern\node_modules\router\index.js:295:15
     at processParams (C:\code\Backend\Authentication modern\node_modules\router\index.js:582:12)
     at next (C:\code\Backend\Authentication modern\node_modules\router\index.js:291:5)
+07-4-2026 07:37:59 PM error: req is not defined
+ReferenceError: req is not defined
+    at AuthService.register (file:///C:/code/Backend/Authentication%20modern/src/app/services/auth.services.js:35:17)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async register (file:///C:/code/Backend/Authentication%20modern/src/controllers/auth.controller.js:10:17)
+07-4-2026 07:38:39 PM error: Username or email already exists
+Error: Username or email already exists
+    at AuthService.register (file:///C:/code/Backend/Authentication%20modern/src/app/services/auth.services.js:14:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async register (file:///C:/code/Backend/Authentication%20modern/src/controllers/auth.controller.js:10:17)
+07-4-2026 07:38:53 PM error: req is not defined
+ReferenceError: req is not defined
+    at AuthService.register (file:///C:/code/Backend/Authentication%20modern/src/app/services/auth.services.js:35:17)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async register (file:///C:/code/Backend/Authentication%20modern/src/controllers/auth.controller.js:10:17)
+07-4-2026 07:39:19 PM error: req is not defined
+ReferenceError: req is not defined
+    at AuthService.register (file:///C:/code/Backend/Authentication%20modern/src/app/services/auth.services.js:36:24)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async register (file:///C:/code/Backend/Authentication%20modern/src/controllers/auth.controller.js:10:17)
+07-4-2026 07:40:29 PM error: req is not defined
+ReferenceError: req is not defined
+    at AuthService.register (file:///C:/code/Backend/Authentication%20modern/src/app/services/auth.services.js:36:24)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async register (file:///C:/code/Backend/Authentication%20modern/src/controllers/auth.controller.js:10:17)
+07-4-2026 07:40:57 PM error: Session validation failed: user: User is required
+ValidationError: Session validation failed: user: User is required
+    at Document.invalidate (C:\code\Backend\Authentication modern\node_modules\mongoose\lib\document.js:3420:32)
+    at validatePath (C:\code\Backend\Authentication modern\node_modules\mongoose\lib\document.js:3192:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Promise.all (index 0)
+    at async model.$__validate (C:\code\Backend\Authentication modern\node_modules\mongoose\lib\document.js:3133:3)
+    at async model.validate (C:\code\Backend\Authentication modern\node_modules\mongoose\lib\document.js:2702:5)
+    at async model.validateBeforeSavePreSave (C:\code\Backend\Authentication modern\node_modules\mongoose\lib\plugins\validateBeforeSave.js:39:5)
+    at async Kareem.execPre (C:\code\Backend\Authentication modern\node_modules\kareem\index.js:70:24)
+    at async model.$__save (C:\code\Backend\Authentication modern\node_modules\mongoose\lib\model.js:376:5)
+    at async model.save (C:\code\Backend\Authentication modern\node_modules\mongoose\lib\model.js:642:5)
+07-4-2026 07:42:17 PM error: Username or email already exists
+Error: Username or email already exists
+    at AuthService.register (file:///C:/code/Backend/Authentication%20modern/src/app/services/auth.services.js:14:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async register (file:///C:/code/Backend/Authentication%20modern/src/controllers/auth.controller.js:10:17)
+07-4-2026 09:44:41 PM error: res is not defined
+ReferenceError: res is not defined
+    at AuthService.logout (file:///C:/code/Backend/Authentication%20modern/src/app/services/auth.services.js:136:9)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async logout (file:///C:/code/Backend/Authentication%20modern/src/controllers/auth.controller.js:88:13)
+07-4-2026 09:45:43 PM error: Invalid refresh token
+Error: Invalid refresh token
+    at AuthService.logout (file:///C:/code/Backend/Authentication%20modern/src/app/services/auth.services.js:128:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async logout (file:///C:/code/Backend/Authentication%20modern/src/controllers/auth.controller.js:88:13)
+07-4-2026 09:46:21 PM error: Username or email already exists
+Error: Username or email already exists
+    at AuthService.register (file:///C:/code/Backend/Authentication%20modern/src/app/services/auth.services.js:14:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async register (file:///C:/code/Backend/Authentication%20modern/src/controllers/auth.controller.js:10:17)
+07-4-2026 09:47:39 PM error: Refresh token not found
+Error: Refresh token not found
+    at AuthService.refreshToken (file:///C:/code/Backend/Authentication%20modern/src/app/services/auth.services.js:68:27)
+    at refreshToken (file:///C:/code/Backend/Authentication%20modern/src/controllers/auth.controller.js:65:35)
+    at Layer.handleRequest (C:\code\Backend\Authentication modern\node_modules\router\lib\layer.js:152:17)
+    at next (C:\code\Backend\Authentication modern\node_modules\router\lib\route.js:157:13)
+    at Route.dispatch (C:\code\Backend\Authentication modern\node_modules\router\lib\route.js:117:3)
+    at handle (C:\code\Backend\Authentication modern\node_modules\router\index.js:435:11)
+    at Layer.handleRequest (C:\code\Backend\Authentication modern\node_modules\router\lib\layer.js:152:17)
+    at C:\code\Backend\Authentication modern\node_modules\router\index.js:295:15
+    at processParams (C:\code\Backend\Authentication modern\node_modules\router\index.js:582:12)
+    at next (C:\code\Backend\Authentication modern\node_modules\router\index.js:291:5)
+07-4-2026 09:53:10 PM error: Invalid refresh token
+Error: Invalid refresh token
+    at AuthService.refreshToken (file:///C:/code/Backend/Authentication%20modern/src/app/services/auth.services.js:84:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async refreshToken (file:///C:/code/Backend/Authentication%20modern/src/controllers/auth.controller.js:65:17)

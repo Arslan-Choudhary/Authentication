@@ -7,7 +7,13 @@ class AuthController {
             const { username, email, password } = req.body;
 
             const { user, accessToken, refreshToken } =
-                await AuthService.register(username, email, password);
+                await AuthService.register(
+                    username,
+                    email,
+                    password,
+                    req.ip,
+                    req.headers["user-agent"]
+                );
 
             res.cookie("refreshToken", refreshToken, {
                 httpOnly: true,
@@ -55,9 +61,10 @@ class AuthController {
         try {
             const refreshToken = req.cookies.refreshToken;
 
-            const {accessToken, newRefreshToken} = await AuthService.refreshToken(refreshToken);
+            const { accessToken, newRefreshToken } =
+                await AuthService.refreshToken(refreshToken);
 
-             res.cookie("refreshToken", newRefreshToken, {
+            res.cookie("refreshToken", newRefreshToken, {
                 httpOnly: true,
                 secure: true,
                 sameSite: "strict",
@@ -69,6 +76,24 @@ class AuthController {
                 { accessToken: accessToken },
                 "Access Token refreshed successfully"
             );
+        } catch (error) {
+            ResponseHandler.errorHandler(res, error);
+        }
+    }
+
+    static async logout(req, res) {
+        try {
+            const refreshToken = req.cookies?.refreshToken;
+
+            await AuthService.logout(refreshToken);
+
+            res.clearCookie("refreshToken", {
+                httpOnly: true,
+                secure: true,
+                sameSite: "strict",
+            });
+
+            ResponseHandler.successHandler(res, "", "Logged out successfully");
         } catch (error) {
             ResponseHandler.errorHandler(res, error);
         }

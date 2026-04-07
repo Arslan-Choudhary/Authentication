@@ -28,8 +28,8 @@ userSchema.pre("save", async function () {
         .digest("hex");
 });
 
-userSchema.methods.generateAccessToken = function () {
-    return jwt.sign({ _id: this._id }, ENV.JWT_SECRET, {
+userSchema.methods.generateAccessToken = function (sessionId) {
+    return jwt.sign({ _id: this._id, sessionId }, ENV.JWT_SECRET, {
         expiresIn: ENV.acccessTokenExpiresIn,
     });
 };

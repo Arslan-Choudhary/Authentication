@@ -1,13 +1,12 @@
+import crypto from "crypto";
 import jwt from "jsonwebtoken";
-import { AuthRepository } from "#repository";
+import { AuthRepository, SessionRepository } from "#repository";
 import ENV from "#env";
 
 class AuthService {
-    static async register(username, email, password) {
+    static async register(username, email, password, ip, userAgent) {
         const isAlreadyReistered =
             await AuthRepository.findUserByUsernameOrEmail(username, email);
-
-        console.log("isAlreadyReistered:", isAlreadyReistered);
 
         if (isAlreadyReistered) {
             const error = new Error("Username or email already exists");
@@ -21,9 +20,23 @@ class AuthService {
             password,
         });
 
-        const accessToken = user.generateAccessToken();
-
         const refreshToken = user.generateRefreshToken();
+
+        const refreshTokenHash = crypto
+            .createHash("sha256")
+            .update(refreshToken)
+            .digest("hex");
+
+        const sessionData = {
+            user: user._id,
+            refreshTokenHash,
+            ip: ip,
+            userAgent,
+        };
+
+        const session = await SessionRepository.createSession(sessionData);
+
+        const accessToken = user.generateAccessToken(session._id);
 
         return { user, accessToken, refreshToken };
     }
@@ -57,6 +70,20 @@ class AuthService {
 
         const decoded = jwt.verify(refreshToken, ENV.JWT_SECRET);
 
+        const refreshTokenHash = crypto
+            .createHash("sha256")
+            .update(refreshToken)
+            .digest("hex");
+
+        const session =
+            await SessionRepository.findOneSession(refreshTokenHash);
+
+        if (!session) {
+            const error = new Error("Invalid refresh token");
+            error.status = 401;
+            throw error;
+        }
+
         const user = await AuthRepository.findUserById(decoded._id);
 
         if (!user) {
@@ -69,7 +96,44 @@ class AuthService {
 
         const newRefreshToken = user.generateRefreshToken();
 
+        const newRefreshTokenHash = crypto
+            .createHash("sha256")
+            .update(newRefreshToken)
+            .digest("hex");
+
+        session.refreshTokenHash = newRefreshTokenHash;
+        await session.save();
+
         return { accessToken, newRefreshToken };
+    }
+
+    static async logout(refreshToken) {
+        if (!refreshToken) {
+            const error = new Error("Refresh token not found");
+            error.status = 400;
+            throw error;
+        }
+
+        const refreshTokenHash = crypto
+            .createHash("sha256")
+            .update(refreshToken)
+            .digest("hex");
+
+        const session =
+            await SessionRepository.findOneSession(refreshTokenHash);
+
+        if (!session) {
+            const error = new Error("Invalid refresh token");
+            error.status = 400;
+            throw error;
+        }
+
+        if (!session.revoked) {
+            session.revoked = true;
+            await session.save();
+        }
+
+        return true;
     }
 }
 
