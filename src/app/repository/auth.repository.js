@@ -5,6 +5,10 @@ class AuthRepository {
         return await userModel.findOne({ $or: [{ username }, { email }] });
     }
 
+    static async findUserByEmail(email) {
+        return await userModel.findOne({ email });
+    }
+
     static async createUser(data) {
         return await userModel.create(data);
     }

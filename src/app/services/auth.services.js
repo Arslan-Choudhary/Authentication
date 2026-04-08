@@ -41,6 +41,51 @@ class AuthService {
         return { user, accessToken, refreshToken };
     }
 
+    static async login(email, password, ip, userAgent) {
+        const user = await AuthRepository.findUserByEmail(email);
+
+        console.log(user);
+
+        if (!user) {
+            const error = new Error("Invalid email or password");
+            error.status = 401;
+            throw error;
+        }
+
+        const hashedPassword = crypto
+            .createHash("sha256")
+            .update(password)
+            .digest("hex");
+
+        const isPasswordValid = hashedPassword === user.password;
+
+        if (!isPasswordValid) {
+            const error = new Error("Invalid email or password");
+            error.status = 401;
+            throw error;
+        }
+
+        const refreshToken = user.generateRefreshToken();
+
+        const refreshTokenHash = crypto
+            .createHash("sha256")
+            .update(refreshToken)
+            .digest("hex");
+
+        const sessionData = {
+            user: user._id,
+            refreshTokenHash,
+            ip: ip,
+            userAgent,
+        };
+
+        const session = await SessionRepository.createSession(sessionData);
+
+        const accessToken = user.generateAccessToken(session._id);
+
+        return { refreshToken, accessToken, user };
+    }
+
     static async getMe(token) {
         if (!token) {
             const error = new Error("token not found");
@@ -131,6 +176,28 @@ class AuthService {
         if (!session.revoked) {
             session.revoked = true;
             await session.save();
+        }
+
+        return true;
+    }
+
+    static async logoutAll(refreshToken) {
+        if (!refreshToken) {
+            const error = new Error("Refresh token not found");
+            error.status = 400;
+            throw error;
+        }
+
+        const decoded = jwt.verify(refreshToken, ENV.JWT_SECRET);
+
+        const updatedSession = await SessionRepository.updateAllSession(
+            decoded._id
+        );
+
+        if (!updatedSession) {
+            const error = new Error("Session not found");
+            error.status = 404;
+            throw error;
         }
 
         return true;

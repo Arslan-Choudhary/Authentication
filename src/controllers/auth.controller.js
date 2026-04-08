@@ -41,6 +41,42 @@ class AuthController {
         }
     }
 
+    static async login(req, res) {
+        try {
+            const { email, password } = req.body;
+
+            const { refreshToken, accessToken, user } = await AuthService.login(
+                email,
+                password,
+                req.ip,
+                req.headers["user-agent"]
+            );
+
+            res.cookie("refreshToken", refreshToken, {
+                httpOnly: true,
+                secure: true,
+                sameSite: "strict",
+                maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+            });
+
+            const responseData = {
+                user: {
+                    email: user.email,
+                    username: user.username,
+                },
+                accessToken: accessToken,
+            };
+
+            ResponseHandler.createHandler(
+                res,
+                responseData,
+                "Logged in successfully"
+            );
+        } catch (error) {
+            ResponseHandler.errorHandler(res, error);
+        }
+    }
+
     static async getMe(req, res) {
         try {
             const token = req.headers.authorization?.split(" ")[1];
@@ -94,6 +130,28 @@ class AuthController {
             });
 
             ResponseHandler.successHandler(res, "", "Logged out successfully");
+        } catch (error) {
+            ResponseHandler.errorHandler(res, error);
+        }
+    }
+
+    static async logoutAll(req, res) {
+        try {
+            const refreshToken = req.cookies.refreshToken;
+
+            await AuthService.logoutAll(refreshToken);
+
+            res.clearCookie("refreshToken", {
+                httpOnly: true,
+                secure: true,
+                sameSite: "strict",
+            });
+
+            ResponseHandler.successHandler(
+                res,
+                "",
+                "Logged out from all devices successfully"
+            );
         } catch (error) {
             ResponseHandler.errorHandler(res, error);
         }

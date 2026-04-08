@@ -11,6 +11,13 @@ class SessionRepository {
             revoked: false,
         });
     }
+
+    static async updateAllSession(userId) {
+        return await sessionModel.updateMany(
+            { user: userId, revoked: false },
+            { revoked: true }
+        );
+    }
 }
 
 export default SessionRepository;

@@ -9,6 +9,11 @@ const authRouter = Router();
 authRouter.route("/register").post(AuthController.register);
 
 /**
+ * - POST /api/auth/login
+ */
+authRouter.route("/login").post(AuthController.login);
+
+/**
  * - GET /api/auth/get-me
  */
 authRouter.route("/get-me").get(AuthController.getMe);
@@ -19,8 +24,13 @@ authRouter.route("/get-me").get(AuthController.getMe);
 authRouter.route("/refresh-token").get(AuthController.refreshToken);
 
 /**
- * GET /api/auth/logout
+ * - GET /api/auth/logout
  */
 authRouter.route("/logout").get(AuthController.logout);
+
+/**
+ * - GET /api/auth/logout-all
+ */
+authRouter.route("/logout-all").get(AuthController.logoutAll);
 
 export default authRouter;
