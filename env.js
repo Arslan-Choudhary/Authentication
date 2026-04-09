@@ -15,6 +15,10 @@ const ENV = {
     acccessTokenExpiresIn: env.acccessTokenExpiresIn,
     refreshTokenExpiresIn: env.refreshTokenExpiresIn,
     JWT_SECRET: env.JWT_SECRET,
+    GOOGLE_CLIENT_ID: env.GOOGLE_CLIENT_ID,
+    GOOGLE_CLIENT_SECRET: env.GOOGLE_CLIENT_SECRET,
+    GOOGLE_REFRESH_TOKEN: env.GOOGLE_REFRESH_TOKEN,
+    GOOGLE_USER: env.GOOGLE_USER,
 };
 
 export default ENV;

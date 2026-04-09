@@ -1,7 +1,8 @@
 import crypto from "crypto";
 import jwt from "jsonwebtoken";
-import { AuthRepository, SessionRepository } from "#repository";
 import ENV from "#env";
+import { AuthRepository, OtpRepository, SessionRepository } from "#repository";
+import { sendEmail, generateOtp, getOtpHtml } from "#utils";
 
 class AuthService {
     static async register(username, email, password, ip, userAgent) {
@@ -20,31 +21,31 @@ class AuthService {
             password,
         });
 
-        const refreshToken = user.generateRefreshToken();
+        const otp = generateOtp();
+        const html = getOtpHtml(otp);
 
-        const refreshTokenHash = crypto
-            .createHash("sha256")
-            .update(refreshToken)
-            .digest("hex");
+        const otpHash = crypto.createHash("sha256").update(otp).digest("hex");
 
-        const sessionData = {
-            user: user._id,
-            refreshTokenHash,
-            ip: ip,
-            userAgent,
-        };
+        await OtpRepository.createOtpEntry({ email, user: user._id, otpHash });
 
-        const session = await SessionRepository.createSession(sessionData);
+        await sendEmail(
+            email,
+            "OTP Verification",
+            `Your OTP code is ${otp}`,
+            html
+        );
 
-        const accessToken = user.generateAccessToken(session._id);
-
-        return { user, accessToken, refreshToken };
+        return { user };
     }
 
     static async login(email, password, ip, userAgent) {
         const user = await AuthRepository.findUserByEmail(email);
 
-        console.log(user);
+        if (!user.verified) {
+            const error = new Error("Email not verified");
+            error.status = 401;
+            throw error;
+        }
 
         if (!user) {
             const error = new Error("Invalid email or password");
@@ -201,6 +202,24 @@ class AuthService {
         }
 
         return true;
+    }
+
+    static async verifyEmail(otp, email) {
+        const otpHash = crypto.createHash("sha256").update(otp).digest("hex");
+
+        const otpDoc = await OtpRepository.findOtp(email, otpHash);
+
+        if (!otpDoc) {
+            const error = new Error("Invalid OTP");
+            error.status = 400;
+            throw error;
+        }
+
+        const user = await AuthRepository.findUserByIdAndUpdate(otpDoc.user);
+
+        await OtpRepository.deleteOtps(otpDoc.user);
+
+        return user;
     }
 }
 

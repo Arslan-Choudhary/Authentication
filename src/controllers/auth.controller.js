@@ -6,29 +6,33 @@ class AuthController {
         try {
             const { username, email, password } = req.body;
 
-            const { user, accessToken, refreshToken } =
-                await AuthService.register(
-                    username,
-                    email,
-                    password,
-                    req.ip,
-                    req.headers["user-agent"]
-                );
+            const {
+                user,
+                // accessToken,
+                //  refreshToken
+            } = await AuthService.register(
+                username,
+                email,
+                password,
+                req.ip,
+                req.headers["user-agent"]
+            );
 
-            res.cookie("refreshToken", refreshToken, {
-                httpOnly: true,
-                secure: true,
-                sameSite: "strict",
-                maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-            });
+            // res.cookie("refreshToken", refreshToken, {
+            //     httpOnly: true,
+            //     secure: true,
+            //     sameSite: "strict",
+            //     maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+            // });
 
             const responseData = {
                 user: {
                     _id: user._id,
                     email: user.email,
                     username: user.username,
+                    verified: user.verified,
                 },
-                accessToken: accessToken,
+                // accessToken: accessToken,
             };
 
             ResponseHandler.createHandler(
@@ -151,6 +155,30 @@ class AuthController {
                 res,
                 "",
                 "Logged out from all devices successfully"
+            );
+        } catch (error) {
+            ResponseHandler.errorHandler(res, error);
+        }
+    }
+
+    static async verifyEmail(req, res) {
+        try {
+            const { otp, email } = req.body;
+
+            const user = await AuthService.verifyEmail(otp, email);
+
+            console.log(user);
+
+            ResponseHandler.successHandler(
+                res,
+                {
+                    user: {
+                        username: user.username,
+                        email: user.email,
+                        verified: user.verified,
+                    },
+                },
+                "Email verified successfully"
             );
         } catch (error) {
             ResponseHandler.errorHandler(res, error);

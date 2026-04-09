@@ -187,3 +187,33 @@ Error: Refresh token not found
     at C:\code\Backend\Authentication modern\node_modules\router\index.js:295:15
     at processParams (C:\code\Backend\Authentication modern\node_modules\router\index.js:582:12)
     at next (C:\code\Backend\Authentication modern\node_modules\router\index.js:291:5)
+09-4-2026 10:39:48 PM error: Email not verified
+Error: Email not verified
+    at AuthService.login (file:///C:/code/Backend/Authentication%20modern/src/app/services/auth.services.js:67:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async login (file:///C:/code/Backend/Authentication%20modern/src/controllers/auth.controller.js:52:57)
+09-4-2026 10:42:23 PM error: Cannot read properties of null (reading 'username')
+TypeError: Cannot read properties of null (reading 'username')
+    at verifyEmail (file:///C:/code/Backend/Authentication%20modern/src/controllers/auth.controller.js:174:40)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+09-4-2026 10:43:29 PM error: Cannot read properties of null (reading 'username')
+TypeError: Cannot read properties of null (reading 'username')
+    at verifyEmail (file:///C:/code/Backend/Authentication%20modern/src/controllers/auth.controller.js:176:40)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+09-4-2026 10:45:31 PM error: Cannot read properties of null (reading 'username')
+TypeError: Cannot read properties of null (reading 'username')
+    at verifyEmail (file:///C:/code/Backend/Authentication%20modern/src/controllers/auth.controller.js:176:40)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+09-4-2026 10:46:23 PM error: Cannot read properties of null (reading 'username')
+TypeError: Cannot read properties of null (reading 'username')
+    at verifyEmail (file:///C:/code/Backend/Authentication%20modern/src/controllers/auth.controller.js:176:40)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+09-4-2026 10:47:09 PM error: Cannot read properties of null (reading 'username')
+TypeError: Cannot read properties of null (reading 'username')
+    at verifyEmail (file:///C:/code/Backend/Authentication%20modern/src/controllers/auth.controller.js:176:40)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+09-4-2026 10:51:39 PM error: Invalid OTP
+Error: Invalid OTP
+    at AuthService.verifyEmail (file:///C:/code/Backend/Authentication%20modern/src/app/services/auth.services.js:235:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async verifyEmail (file:///C:/code/Backend/Authentication%20modern/src/controllers/auth.controller.js:168:26)

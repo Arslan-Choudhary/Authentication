@@ -16,6 +16,14 @@ class AuthRepository {
     static async findUserById(id) {
         return await userModel.findById(id);
     }
+
+    static async findUserByIdAndUpdate(userId) {
+        return await userModel.findByIdAndUpdate(
+            userId,
+            { verified: true },
+            { new: true }
+        );
+    }
 }
 
 export default AuthRepository;
